@@ -1,0 +1,12 @@
+Thanks for buying my script!
+
+How to install the script?
+-> add in the server.cfg "start rc_VehicleShop"
+-> import the sql file in your database
+
+
+How to add more vehicles?
+-> Go into the database of the script and just copy an existing line. 
+There are 3 genres, bike, car, truck. 
+Put your new line in such a way that the vehicle name matches your vehicle what you want
+

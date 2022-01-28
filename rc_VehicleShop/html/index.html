@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="container"> 
+
+        <div id="startMenu">
+            <img id="logoCar" src="Assets/car.png">
+
+            <h2>Los Santos - Vehicle Shop</h2>
+            
+            <div id="buttonContainerStart">
+
+                <button class="buttonStartPrefab" id="first">
+                    <i style="font-size: 23px; position: absolute; left: 10px; top: 15px" class="fa fa-car"></i>
+                    <h2 style="font-size: 30px; position: absolute; left: -40px; top: -15px;">Cars</h2>
+                </button>
+
+                <button class="buttonStartPrefab" id="second">
+                    <i style="font-size: 23px; position: absolute; left: 10px; top: 15px" class="fa fa-motorcycle"></i>
+                    <h2 style="font-size: 30px; position: absolute; left: 0px; top: -15px;">Motorcycle</h2>
+                </button>
+
+                <button class="buttonStartPrefab" id="third">
+                    <i style="font-size: 23px; position: absolute; left: 10px; top: 15px" class="fa fa-truck"></i>
+                    <h2 style="font-size: 30px; position: absolute; left: -40px; top: -15px;">Truck</h2>
+                </button>
+
+            </div>
+            
+            <button id="close">Close</button>
+        </div>
+
+        <div id="loadingScreen" style="opacity: 0; display: none;">
+            <div id="loadingScreenContent">
+                <i class="fa fa-cog fa-spin" style="font-size: 70px; top: 60px; position: relative;"></i>
+                <p style="position: relative; top: 65px; font-weight: 200; font-size: 25px;">Please wait!</p>
+                <p style="position: relative; top: 45px; font-weight: 200; font-size: 15px; opacity: .5;">Vehicles are being charged</p>
+            </div>
+        </div>
+
+
+
+        <div id="carMenu" style="display: none;">
+            <h2 id="overlayName"><u>Cars</u></h2>
+
+            <div id="carContent" class="contentCarList"> 
+                <div id="carSlotPrefab">
+                    <img src="https://i.imgur.com/azOor2s.png">
+                    <h2>Sample Car</h2>
+                    <p>$5182</p>
+                    <input type="radio" class='date-format-switcher' name="carName" value="`+carList[i].id+`">
+                </div>
+
+               
+
+                
+
+                
+            </div>
+
+
+            <img src="Assets/discount.png" id="discountIMG">
+            <h2>Buy Options</h2>
+
+            <button class="couponsButton">Coupons</button>
+            <button class="testDriveButton">Test drive</button>
+            <button class="buyButton">Buy</button>
+
+            <input type="text" class="couponCodeInput" placeholder="Coupon Code">
+
+            <p class="errorText">Error: Please select a car</p>
+
+            <button id="closeCar" class="closeButton">Close</button>
+        </div>
+
+
+        <div id="motorcycleMenu" style="display: none;">
+            <h2 id="overlayName"><u>Motorcycle</u></h2>
+
+            <div id="bikeContent" class="contentCarList">
+                <div id="carSlotPrefab">
+                    <img src="Assets/Cars/testCar.png">
+                    <h2>Sample Car</h2>
+                    <p>$5182</p>
+                    <input type="radio" class='date-format-switcher' name="carName" value="`+carList[i].id+`">
+                </div>
+
+               
+
+                
+
+                
+            </div>
+
+
+            <img src="Assets/discount.png" id="discountIMG">
+            <h2>Buy Options</h2>
+
+            <button class="couponsButton" onclick="couponButton()">Coupons</button>
+            <button class="testDriveButton">Test drive</button>
+            <button class="buyButton">Buy</button>
+
+            <input type="text" class="couponCodeInput" placeholder="Coupon Code">
+
+            <p class="errorText">Error: Please select a car</p>
+
+            <button id="closeMotorcycle" class="closeButton">Close</button>
+        </div>
+    
+
+        <div id="truckMenu" style="display: none;">
+            <h2 id="overlayName"><u>Truck</u></h2>
+
+            <div id="truckContent" class="contentCarList">
+                <div id="carSlotPrefab">
+                    <img src="Assets/Cars/testCar.png">
+                    <h2>Sample Car</h2>
+                    <p>$5182</p>
+                    <input type="radio" class='date-format-switcher' name="carName" value="`+carList[i].id+`">
+                </div>
+
+               
+
+                
+
+                
+            </div>
+
+
+            <img src="Assets/discount.png" id="discountIMG">
+            <h2>Buy Options</h2>
+
+            <button class="couponsButton" >Coupons</button>
+            <button class="testDriveButton">Test drive</button>
+            <button class="buyButton">Buy</button>
+
+            <input type="text" class="couponCodeInput" placeholder="Coupon Code">
+
+            <p class="errorText">Error: Please select a car</p>
+
+            <button id="closeTruck" class="closeButton">Close</button>
+        </div>
+
+        
+        
+
+    </div>
+    <script src="./index.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+
+            $("#first").click(function(){
+                $.post("http://rc_VehicleShop/carList", JSON.stringify({ }))
+                $( "#startMenu" ).animate({
+                    opacity: 0
+                }, 400 );
+                $( "#container" ).animate({
+                    width: 840
+                }, 700 );
+                $("#startMenu").delay(700).hide(500)
+                $( "#loadingScreen" ).show(500)
+                $( "#loadingScreen" ).animate({
+                    opacity: 1
+                }, 400 );
+                $( "#loadingScreen" ).delay(4000).hide(500)
+                $( "#carMenu" ).delay(5000).show(500)
+            });
+
+
+            $("#second").click(function(){
+                $.post("http://rc_VehicleShop/bikeList", JSON.stringify({ }))
+                $( "#startMenu" ).animate({
+                    opacity: 0
+                }, 400 );
+                $( "#container" ).animate({
+                    width: 840
+                }, 700 );
+                $("#startMenu").delay(700).hide(500)
+                $( "#loadingScreen" ).show(500)
+                $( "#loadingScreen" ).animate({
+                    opacity: 1
+                }, 400 );
+                $( "#loadingScreen" ).delay(4000).hide(500)
+                $( "#motorcycleMenu" ).delay(5000).show(500)
+            });
+
+
+            $("#third").click(function(){
+                $.post("http://rc_VehicleShop/truckList", JSON.stringify({ }))
+                $( "#startMenu" ).animate({
+                    opacity: 0
+                }, 400 );
+                $( "#container" ).animate({
+                    width: 840
+                }, 700 );
+                $("#startMenu").delay(700).hide(500)
+                $( "#loadingScreen" ).show(500)
+                $( "#loadingScreen" ).animate({
+                    opacity: 1
+                }, 400 );
+                $( "#loadingScreen" ).delay(4000).hide(500)
+                $( "#truckMenu" ).delay(5000).show(500)
+            });
+
+
+
+            $("#closeCar").click(function () {
+                
+                $("#carMenu").hide(); 
+                $("#loadingScreen").hide();
+                $( "#container" ).animate({
+                    width: 500
+                }, 700 ); 
+                $("#startMenu").show(500); 
+                $( "#startMenu" ).animate({
+                    opacity: 1
+                }, 400 );
+
+            });   
+            
+            $("#closeMotorcycle").click(function () {
+                
+                $("#motorcycleMenu").hide(); 
+                $("#loadingScreen").hide();
+                $( "#container" ).animate({
+                    width: 500
+                }, 700 ); 
+                $("#startMenu").show(500); 
+                $( "#startMenu" ).animate({
+                    opacity: 1
+                }, 400 );
+
+            });  
+
+            $("#closeTruck").click(function () {
+                
+                $("#truckMenu").hide(); 
+                $("#loadingScreen").hide();
+                $( "#container" ).animate({
+                    width: 500
+                }, 700 ); 
+                $("#startMenu").show(500); 
+                $( "#startMenu" ).animate({
+                    opacity: 1
+                }, 400 );
+
+            });  
+
+
+
+
+
+
+
+
+          $(".testDriveButton").click(function(){
+            var idCarChecked= $('input[name=carName]:checked').val();
+            var idCar= $('input[name=carName]:checked', '.contentCarList').val();
+
+
+
+            if(idCarChecked){
+
+                $.post("http://rc_VehicleShop/testDrive", JSON.stringify({
+                    idCar: idCar
+                    }))
+                $.post('http://rc_VehicleShop/exit', JSON.stringify({})); 
+                
+                
+                
+
+
+                
+            }else{
+                $(".errorText").show(500).delay(3000).hide(500)
+            }
+            
+            
+          });
+
+
+          $(".buyButton").click(function(){
+            var idCarChecked= $('input[name=carName]:checked').val();
+            var idCar= $('input[name=carName]:checked', '.contentCarList').val();
+            let inputCoupon = $(".couponCodeInput").val();
+
+
+            if(idCarChecked){
+
+                $.post("http://rc_VehicleShop/buyVehicle", JSON.stringify({
+                    idCar: idCar,
+                    inputCoupon: inputCoupon
+                    }))
+                $.post('http://rc_VehicleShop/exit', JSON.stringify({})); 
+                
+                
+                
+
+
+                
+            }else{
+                $(".errorText").show(500).delay(3000).hide(500)
+            }
+            
+            
+          });
+
+
+
+
+
+
+
+
+            $(".couponsButton").click(function(){
+
+                console.log("TEST");
+                if($('.couponCodeInput').css('opacity') == 0) {
+                $( ".couponCodeInput" ).animate({
+                    opacity: 1
+                }, 400 );
+                }else{
+                $( ".couponCodeInput" ).animate({
+                    opacity: 0
+                }, 400 );  
+                }
+                
+            });
+            
+        });
+    </script>
+</body>
+</html>
